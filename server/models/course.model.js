@@ -6,7 +6,8 @@ const courseSchema = new Schema({
   likes: { type: Number, default: 0 },
   views: { type: Number, default: 0 },
   date: { type: Date, default: Date.now },
-  image: { type: Date, default: Date.now },
+  img: { type: String },
+  createdUser: { type: Object }
 })
 
 module.exports = model('course', courseSchema)

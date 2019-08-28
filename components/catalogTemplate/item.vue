@@ -24,7 +24,9 @@
       <p>{{ item.createdUser.userName }}</p>
       <p>{{ this.$moment(item.createdAt).format('LLL') }}</p>
     </div>
-    <h2 class="title">{{ create ? item.name.value : item.name }}</h2>
+    <h2 class="title">
+      {{ create ? item.name.value : item.name }}
+    </h2>
     <!--<p class="description">{{create ? item.description.value : item.description}}</p>-->
     <div class="dopBox">
       <div class="amountShow">
@@ -54,7 +56,10 @@ export default {
       el.style.transition = `all 0.3s ease-out 0.${this.index}s`
       el.style.opacity = 0
     }
-  }
+  },
+  mounted() {
+    console.log(this.item)
+  },
 }
 </script>
 
@@ -121,7 +126,7 @@ export default {
   .catalogImgBox
     cursor: pointer
     position: relative
-    max-height: 200px
+    height: 200px
     overflow: hidden
     img
       width: 100%

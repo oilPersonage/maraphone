@@ -1,16 +1,21 @@
 const Course = require('../models/course.model')
+const User = require('../models/user.model')
 
 module.exports.create = async (req, res) => {
-  const { name, description, createdUser } = req.body
+  const { name, description, createdUser, img } = req.body
   const post = new Course({
     name,
     description,
-    image: `/${req.file.filename}`,
+    // image: `/${req.file.filename}`,
+    img: `${img}`,
     createdUser
   })
 
   try {
-    await post.save()
+    const saved = await post.save()
+    const us = await User.findOne({ _id: createdUser.id })
+    us.courses.push(saved.id)
+    us.save()
     res.status(201).json({ post })
   } catch (e) {
     res.status(500).json(e)
@@ -21,17 +26,6 @@ module.exports.getAll = async (req, res) => {
   try {
     const courses = await Course.find().sort({ date: -1 })
     res.json(courses)
-  } catch (e) {
-    res.status(500).json(e)
-  }
-}
-
-module.exports.getById = async (req, res) => {
-  const {id} = req.params
-  try {
-    await Course.find().populate('users').exec((err, course) => {
-      res.json(course)
-    })
   } catch (e) {
     res.status(500).json(e)
   }

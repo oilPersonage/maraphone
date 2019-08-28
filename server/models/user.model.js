@@ -7,16 +7,18 @@ const userSchema = new Schema({
   slogan: { type: String },
   posts: { type: Number, default: 0 },
   likes: { type: Number, default: 0 },
-  // courses: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: 'users'
-  //   }
-  // ]
+  courses: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'course'
+    }
+  ]
 })
-
-userSchema.virtual('courses', {
-  ref: 'users'
-})
+//
+// userSchema.populate('courses', {
+//   ref: 'users',
+//   localField: '_id',
+//   foreignField: 'name'
+// })
 
 module.exports = model('users', userSchema)

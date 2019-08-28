@@ -16,8 +16,11 @@ export const actions = {
     const course = await this.$axios.$get('/api/course/getCourseAll')
     commit('setCourse', course)
   },
+  async createCourse ({ commit }, data) {
+    await this.$axios.$post('/api/course/create', data)
+  },
   async getCourseByUser ({ commit }, id) {
-    const course = await this.$axios.$get('/api/course/getCourseByUser/' + id)
+    const course = await this.$axios.$get('/api/users/getUserCourse/' + id)
     commit('setCourseUser', course)
   }
 }

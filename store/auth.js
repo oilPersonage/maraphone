@@ -12,6 +12,7 @@ export const actions = {
   async login ({ commit }, data) {
     try {
       const { token, user } = await this.$axios.$post('/api/auth/login', data)
+      console.log({user})
       commit('setToken', token)
       commit('setUser', user)
       cookies.set('user', user)
