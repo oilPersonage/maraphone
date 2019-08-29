@@ -30,6 +30,15 @@ module.exports.getAll = async (req, res) => {
     res.status(500).json(e)
   }
 }
+module.exports.getCourseId = async (req, res) => {
+  const { id } = req.params
+  try {
+    const course = await Course.findById(id)
+    res.json(course)
+  } catch (e) {
+    res.status(500).json(e)
+  }
+}
 
 module.exports.update = async (req, res) => {
   const { name, description } = req.body

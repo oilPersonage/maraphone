@@ -1,48 +1,62 @@
 <template>
   <div class="catalogBigContainer showCourseBox">
     <div class="title">
-      {{getCurrentCourse.name}}
+      <div class="nameBox goToAccount">
+        <div class="buttonBack" @click="$router.go(-1)">
+          Назад
+        </div>
+        {{ course.name }}
+      </div>
       <div class="buttonTitle">
         <div class="likes">
-          <font-awesome-icon style="font-size: 18px" :icon="['fas', 'heart']"/>
-          {{getCurrentCourse.likes}}
+          <font-awesome-icon style="font-size: 18px" :icon="['fas', 'heart']" />
+          {{ course.likes }}
         </div>
         <div class="show">
-          <font-awesome-icon style="font-size: 18px" :icon="['fas', 'eye']"/>
-          {{getCurrentCourse.show}}
+          <font-awesome-icon style="font-size: 18px" :icon="['fas', 'eye']" />
+          {{ course.show }}
         </div>
       </div>
     </div>
-    <div class="name">{{getCurrentCourse.createdUser.userName}}</div>
-    <div class="date">{{$moment(getCurrentCourse.createdAt).format('LLL')}}</div>
-    <div class="description">{{getCurrentCourse.description}}</div>
+    <div class="name">
+      {{ course.createdUser.userName }}
+    </div>
+    <div class="date">
+      {{ $moment(course.createdAt).format('LLL') }}
+    </div>
+    <div class="description">
+      {{ course.description }}
+    </div>
     <div class="bottomShowCourse">
-      <div class="price">Стоимость курса - </div>
+      <div class="price">
+        Стоимость курса -
+      </div>
       <div class="buy">
-        <a href="/#">Купить <span>{{getCurrentCourse.price}}</span>₽</a>
+        <a href="/#">Купить <span>{{ course.price || 0 }}</span>₽</a>
       </div>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
-  import {mapActions, mapGetters} from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
-  export default {
-    name: "showCourse",
-    layout: 'default',
-    data() {
-      return {
-        title: 'Название курса',
-      }
-    },
-    methods: mapActions(['fetchCurrentCourse']),
-    computed: mapGetters(['getCurrentCourse']),
-    mounted() {
-      console.log(this.getCurrentCourse)
-      this.fetchCurrentCourse()
+export default {
+  name: 'ShowCourse',
+  layout: 'default',
+  data () {
+    console.log(this)
+    return {
+      title: 'Название курса',
     }
+  },
+  computed: mapGetters({
+    course: 'course/getShowCourse'
+  }),
+  async asyncData ({ store, params }) {
+    await store.dispatch('course/getCurrentCourse', params.id)
   }
+}
 </script>
 
 <style lang="sass">
@@ -90,5 +104,21 @@
             font-weight: bold
             color: inherit
             margin-right: 10px
-
+  .nameBox
+    display: flex
+    align-items: center
+    font-size:  30px
+  .buttonBack
+    position: absolute
+    top: 0
+    cursor: pointer
+    left: 0
+    height: 40px
+    color: $white
+    padding: 0 25px
+    display: flex
+    align-items: center
+    justify-content: center
+    border-radius: 3px
+    background-color: $accent
 </style>

@@ -13,20 +13,16 @@
         <font-awesome-icon icon="trash" style="font-size: 20px;" color="white" />
       </div>
       <div v-if="!create" class="showCourse">
-        <p>
-          <nuxt-link :to="`/showCourse/${item.name}`">
-            <a :href="`/showCourse/${item.name}`" @click="setCurrentCourse(item._id)">Посмотреть</a>
-          </nuxt-link>
-        </p>
+        <nuxt-link :to="`/showCourse/${item._id}`">Посмотреть</nuxt-link>
       </div>
-    </div>
-    <div class="createdOn">
-      <p>{{ item.createdUser.userName }}</p>
-      <p>{{ this.$moment(item.createdAt).format('LLL') }}</p>
     </div>
     <h2 class="title">
       {{ create ? item.name.value : item.name }}
     </h2>
+    <div class="createdOn">
+      <p>{{ item.createdUser.userName }}</p>
+      <p>{{ this.$moment(item.createdAt).format('LLL') }}</p>
+    </div>
     <!--<p class="description">{{create ? item.description.value : item.description}}</p>-->
     <div class="dopBox">
       <div class="amountShow">
@@ -47,7 +43,7 @@ import { mapActions } from 'vuex'
 export default {
   props: ['item', 'index', 'create', 'changeImg', 'clearImg'],
   methods: {
-    ...mapActions(['setCurrentCourse']),
+    ...mapActions({ setCurrentCourse: 'course/setCurrentCourse' }),
     enter (el) {
       el.style.transition = `all 0.3s ease-out 0.${this.index}s`
       el.style.opacity = 1
@@ -57,9 +53,9 @@ export default {
       el.style.opacity = 0
     }
   },
-  mounted() {
+  mounted () {
     console.log(this.item)
-  },
+  }
 }
 </script>
 
@@ -82,7 +78,7 @@ export default {
       margin: 0
     .title
       font-weight: 600
-      margin-bottom: 5px
+      margin-top: 10px
       font-size: 20px
       transition: 0.3s ease-out
       font-family: "Roboto"
@@ -117,12 +113,11 @@ export default {
     display: flex
     align-items: flex-start
     justify-content: center
-    p
+    a
       padding: 15px 25px
       background-color: $accent
       border-radius: 3px
-      a
-        color: $white
+      color: $white
   .catalogImgBox
     cursor: pointer
     position: relative

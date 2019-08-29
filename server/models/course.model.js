@@ -7,6 +7,7 @@ const courseSchema = new Schema({
   views: { type: Number, default: 0 },
   date: { type: Date, default: Date.now },
   img: { type: String },
+  price: { type: Number, default: 0 },
   createdUser: { type: Object }
 })
 

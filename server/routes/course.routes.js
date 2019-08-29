@@ -1,7 +1,7 @@
 const passport = require('passport')
 const { Router } = require('express')
 const upload = require('../middleware/upload')
-const { create, getAll, update, remove } = require('../controllers/course.controller')
+const { create, getAll, update, remove, getCourseId } = require('../controllers/course.controller')
 
 const router = Router()
 
@@ -18,11 +18,11 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   getAll
 )
-// router.get(
-//   '/getCourseByUser/:id',
-//   passport.authenticate('jwt', { session: false }),
-//   getById
-// )
+router.get(
+  '/getCourse/:id',
+  passport.authenticate('jwt', { session: false }),
+  getCourseId
+)
 router.put(
   '/update/:id',
   passport.authenticate('jwt', { session: false }),

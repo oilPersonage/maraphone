@@ -3,6 +3,7 @@
     <div class="title">
       Личный кабинет
     </div>
+    <CatalogFilter :options="options" :filters="filters" />
     <Catalog :create="true" :list="list" />
   </div>
 </template>
@@ -10,10 +11,17 @@
 <script>
 import { mapGetters } from 'vuex'
 import Catalog from '../../../components/catalogTemplate/catalogTemplate.vue'
+import CatalogFilter from '../../../components/catalogTemplate/catalogFilter'
 
 export default {
   components: {
-    Catalog
+    Catalog,
+    CatalogFilter
+  },
+  data () {
+    const options = ['Популярности', 'Просмотрам']
+    const filters = ['Растяжка', 'Face fitness', 'Йога', 'Очистить']
+    return { options, filters }
   },
   transition: {
     name: 'page'
